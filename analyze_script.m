@@ -11,7 +11,7 @@ peaks_to_analyze = ["200","400"];
 %% get information about the files
 
 % select the working folder
-folder = 'C:\Users\Tatiana\Documents\BNL\SLAC\March 2017\Tatiana\31032017';
+folder = 'FOLDER';
 [path] = uigetdir(folder);
 path = strcat(path, '\');
 
