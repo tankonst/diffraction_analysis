@@ -1,6 +1,6 @@
 function total_image = get_images(angle, path, image_files_names, steps )
 
-    %getting array of total images
+    %getting array of total images rotated by 'angle'
     total_image=cell(steps,1);
     delay=zeros(1,steps);
    

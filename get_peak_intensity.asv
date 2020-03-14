@@ -15,8 +15,7 @@ end
 
 
 function [ sorted_intensity] = peak_profile_fit(coord_matrix, image)
-% Fit 1D integrated intensity profiles to Gaussian curve
-% and sorts by the value of delay
+% Fit 1D integrated intensity profiles to Gaussian cur
 
 gauss = fittype(...
     'Am/w*exp(-2*(x-x0)*(x-x0)/w/w)+Bg+kBg*x','coefficients',...

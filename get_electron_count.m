@@ -20,7 +20,7 @@ for i = 1:length(image_files_names)
     image_delay=str2double(split_name(2));
     
     if image_delay > previous_delay
-        filePath = char(strcat(path,file_name))
+        filePath = char(strcat(path,file_name));
         total_image = double(imread(filePath));
         
         %calulating camera background (function of the camera temperature)   
@@ -62,7 +62,7 @@ end
 
 function [camera_background] = camera(image)
 
-% calulating camera background   
+% calulating camera background (funtion of the camera's temperature)  
 
  im_dim=size(image);
  v = 100;
@@ -84,7 +84,6 @@ end
 function [center_intensity] = center(image)
 
 % calculating central intensity
-
 % defining the positon of the center beam integration window (use ImageJ)
 x_center=504;
 y_center=462;

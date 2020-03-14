@@ -4,7 +4,7 @@ close all
 angle = -52; % angle to rotate the diffraction pattern
 n_unpumped = 10; %number of steps at negative delay, i.e before arrival of the laser
 
-% enter all the peaks of interest (coordinates of peoak need to be obtained
+% enter all the peaks of interest (coordinates of peaks need to be obtained
 % in advance using get_coordinates.m file
 peaks_to_analyze = ["200","400"]; 
 

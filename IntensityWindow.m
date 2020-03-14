@@ -1,5 +1,5 @@
 classdef IntensityWindow
-    % class for operating with intensities inside a certain window
+    % class for operating with intensities inside a rectangular window
     
     properties
         x % left top corner of the window
