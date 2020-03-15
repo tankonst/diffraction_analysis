@@ -11,3 +11,5 @@ analyze_script.py -- extract intensities for each families of peaks (average amo
 ScanInfo.py -- library to operate with image series and to extract global (not peak-specific) information for each scan: time delay values, total intensity, camera background, etc.
 
 PeakInfo.py -- library to operate with individual peaks
+
+IntensityWindow -- class for integrating intensity 
