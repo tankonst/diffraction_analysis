@@ -13,3 +13,4 @@ ScanInfo.py -- library to operate with image series and to extract global (not p
 PeakInfo.py -- library to operate with individual peaks
 
 IntensityWindow -- class for integrating intensity 
+![Image description](link-to-image)
