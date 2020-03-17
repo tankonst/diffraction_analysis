@@ -1,0 +1,10 @@
+angle = 0 
+n_unpumped = 8 
+incr_x = 120
+incr_y = 40
+x_center = 504
+y_center = 462
+dx_center = 97
+dy_center = 97
+camera_v = 100
+camera_h = 100

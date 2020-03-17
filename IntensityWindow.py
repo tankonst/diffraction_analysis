@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-@author: Tatiana Konstantinova
+Class for window, within which the intensity is evaluated
+
 """
 class IntensityWindow():
     
