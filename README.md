@@ -6,7 +6,7 @@ The demo is only limited to fitting peaks' profiles to Gaussian forms for extrac
 ![File Scheme](https://github.com/tankonst/diffraction_analysis/blob/master/scheme.JPG?raw=true)
 
 ## Files Descriptions
-* **read_coordinates.py** – reads coordinates of peaks from a mouse click. Need to be done for each group of peaks before running the analysis (only once per experiment unless sample change/beam shift). The script generates files **coordinate*.txt** 
+* **read_coordinates.py** – reads coordinates of peaks from a mouse click. Need to be done for each group of peaks before running the analysis (only once per experiment unless sample change/beam shift). The script generates files **coordinate_.txt** 
 * **experiment_info.txt** – files with parameters of the analysis (numper of time points before excitation with the laser, rotation angle, sizes of integration windows, etc.)
 * **vizualize.py** – vizualization methonds
 * **files_kit.py** – methods for extracting data from external .txt files
