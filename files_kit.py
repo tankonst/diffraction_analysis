@@ -28,10 +28,13 @@ def read_coordinates(peaks):
     xs = []
     ys = []
     # get lists of coordinates
-    with open('coordinate'+peaks+'.txt', 'r') as file:
-        for coordinates in file:            
-            xs.append(int(coordinates.split(' ')[0]))
-            ys.append(int(coordinates.split(' ')[1]))
+    try:
+        with open('coordinate'+peaks+'.txt', 'r') as file:
+            for coordinates in file:            
+                xs.append(int(coordinates.split(' ')[0]))
+                ys.append(int(coordinates.split(' ')[1]))
+    except Exception:
+        print('Cannot locate the file')       
             
     return xs, ys
 
@@ -41,11 +44,14 @@ def read_scan_parameters(filename):
     """
     
     parameters = []
-    with open(filename, 'r') as file:
-       info = file.read()
-    info = info.split('\n')
-    for line in info:
-        parameters.append(int(line.split(' = ')[1]))
+    try:
+        with open(filename, 'r') as file:
+           info = file.read()
+        info = info.split('\n')
+        for line in info:
+            parameters.append(int(line.split(' = ')[1]))
+    except Exception:
+        print('Cannot locate the file') 
         
     return parameters
     
