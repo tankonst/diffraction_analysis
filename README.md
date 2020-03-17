@@ -4,8 +4,12 @@
 
 Files description:
 
-get_coordinates.m identifies coordinates of the peak in a rotated diffraction pattern from mouse clicks. This need to be executed before the first run of analyze_script. Unless the beam moved, the extracted coordinates can be used for multiple experimental sets.
+read_coordinates.py -- reads coordinates of peaks from a mouse click. Need to be done for each peak before running the analysis (only once per experiment unless sample change/beam shift)
 
-analyze_script.m is the main file to run the analysis. This script calls get_list_of_files.m, get_electron_count.m, get_images.m and get_peak_intensity.m .
+analyze_script.py -- extract intensities for each families of peaks (average among equivalent peaks)
 
-IntensityWindow.m is the class for area around a diffraction peak. Methods include the 
+ScanInfo.py -- library to operate with image series and to extract global (not peak-specific) information for each scan: time delay values, total intensity, camera background, etc.
+
+PeakInfo.py -- library to operate with individual peaks
+
+IntensityWindow -- class for integrating intensity 
