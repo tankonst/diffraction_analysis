@@ -127,7 +127,6 @@ def get_images(image_files_names, angle):
     
     return total_images
 
-
 def get_delays(image_files_names):
     """
     Reads time delays from the file names.
@@ -140,5 +139,13 @@ def get_delays(image_files_names):
         
     return delays
 
+def delays_to_ps(delays, n_unpumped):
+    """
+    Converts delay values from mm of motion stage to ps.
+    """
+    time_zero = sorted(delays)[n_unpumped]
+    delays_ps = [(d-time_zero)*6.667 for d in delays]
+        
+    return delays_ps
    
     

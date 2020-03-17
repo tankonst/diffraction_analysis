@@ -33,14 +33,15 @@ try:
     
     # get a list of DF files
     path = input('Enter the file location: ')
-    image_files_names = glob.glob(path+r'\images-ANDOR1\*.tif')
+    image_files_names = glob.glob(path + r'\images-ANDOR1\*.tif')
     
     # get general information about the scan
     total_electron_count, center_int_d, camera_b_d = scinf.get_electrons_counts(image_files_names,
                                                                                 x_center, y_center, dx_center, dy_center,
                                                                                 camera_v, camera_h) 
     delays = scinf.get_delays(image_files_names)
-    delays_sorted = sorted(delays.values())
+    delays_sorted = scinf.delays_to_ps(sorted(delays.values()), n_unpumped)
+    
     scan = pd.DataFrame(index = delays_sorted)
     
     # get rotated images
@@ -53,7 +54,7 @@ try:
         normalized_intensities = pinf.sort_normalize(row_intensities,
                                                      total_electron_count,
                                                      delays, n_unpumped, peaks)
-        normalized_intensities = pinf.remove_outliers(normalized_intensities)
+        normalized_intensities = pinf.remove_outliers(normalized_intensities, delays_sorted)
         
         # record into resulting table
         scan.loc[:, peaks] = normalized_intensities

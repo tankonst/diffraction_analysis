@@ -37,41 +37,47 @@ def initiate_parameters(profile):
     """
     
     background = profile[0]
-    amplitude = max(profile)
-    center = len(profile)//2  
+    amplitude = sorted(profile)[-3]
+    center =  np.where(profile == amplitude)[0][0] 
+    width = 10
+    background_slope = 0
     
-    return  amplitude, center, background
+    return  amplitude, center, width, background, background_slope
 
 def gauss(x, amplitude, center, width, background, background_slope):
     
     return (amplitude/width * np.exp(-0.5*((x-center)**2)/(width**2))
             + background + background_slope*x)
 
-def fit_profile(profile):
+def fit_profile(profile, initial_parameters):
     """ 
     Fits profile with Gaussian function,
-    returns fit parameters : (amplitude, center, width, background, background_slope),
+    returns:
+        fit parameters (amplitude, center, width, background, background_slope),
+        r_squared    
     plots the result of the fit.
     """
     
     # estimate initial parameters
-    amplitude_0, center_0, background_0 = initiate_parameters(profile)
-    width_0 = 10
-    background_slope_0 = 0
-    initial_parameters = np.array([amplitude_0, center_0, width_0, background_0, background_slope_0])
+#    amplitude_0, center_0, width_0, background_0, background_slope_0 = initiate_parameters(profile)
+#    initial_parameters = np.array([amplitude_0, center_0, width_0, background_0, background_slope_0])
     
     x = list(range(len(profile)))
     
     try:    
-        fitted_parameters, pcov = curve_fit(gauss, x, profile, initial_parameters)
+        fit_parameters, pcov = curve_fit(gauss, x, profile, initial_parameters)
+        resid = gauss(np.array(x),*fit_parameters) - np.array(profile)
+        ss_res = np.sum(resid**2)
+        ss_tot = np.sum((profile-np.mean(profile))**2)
+        r_squared = 1 - (ss_res / ss_tot)        
     except Exception as e:
         print(e)
-        fitted_parameters = initial_parameters
         
+       
     # Plot results to check that fitting is adequate   
-    viz.plot_fit(profile, gauss, fitted_parameters, 1)
+    viz.plot_fit(profile, gauss, fit_parameters, 1)
 
-    return fitted_parameters
+    return fit_parameters, r_squared
     
 def get_peak_intensity(peaks, total_images, incr_x, incr_y):
     """
@@ -82,15 +88,20 @@ def get_peak_intensity(peaks, total_images, incr_x, incr_y):
     
     intensities = defaultdict(float)
     
-    xs, ys = fk.read_coordinates(peaks)
-            
-    for delay in total_images.keys():    
-         for j in range(len(xs)):
+    xs, ys = fk.read_coordinates(peaks)    
+        
+    for j in range(len(xs)):
+       first_profile = get_profile(total_images[1], xs[j],ys[j], incr_x, incr_y)
+       initial_parameters = np.array(initiate_parameters(first_profile))   
+       for delay in total_images.keys():    
             profile = get_profile(total_images[delay],
                                   xs[j],ys[j],
                                   incr_x, incr_y)
-            fit_parameters = fit_profile(profile)
+            fit_parameters , r_squared = fit_profile(profile, initial_parameters)
             intensities[delay] += fit_parameters[0]
+            # if the fit is good, pass the results of the fit as initial parameters for the next time point
+            if r_squared > 0.90:
+                initial_parameters = fit_parameters
             
     return intensities
             
@@ -115,7 +126,7 @@ def sort_normalize(intensities, total_electrons, delays, n_unpumped, peaks):
     
     return norm_intensities
     
-def remove_outliers(series):
+def remove_outliers(series, delays):
     """
     Removes outliers in the series that commonly appear due to cosmic rays.
     """   
@@ -124,8 +135,10 @@ def remove_outliers(series):
     for j in range(1,len(series)-1):
         if series[j] > (1+alpha)*series[j-1] and series[j] > (1+alpha)*series[j+1]:
             series[j] = 0.5*(series[j-1] + series[j+1])
+            print('Outlier at {}'.format(delays[j]))
         elif series[j] < (1-alpha)*series[j-1] and series[j] < (1-alpha)*series[j+1]:
             series[j] = 0.5*(series[j-1] + series[j+1])
+            print('Outlier at {}'.format(delays[j]))
     
     return series
     
