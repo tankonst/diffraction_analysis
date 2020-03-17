@@ -58,10 +58,6 @@ def fit_profile(profile, initial_parameters):
     plots the result of the fit.
     """
     
-    # estimate initial parameters
-#    amplitude_0, center_0, width_0, background_0, background_slope_0 = initiate_parameters(profile)
-#    initial_parameters = np.array([amplitude_0, center_0, width_0, background_0, background_slope_0])
-    
     x = list(range(len(profile)))
     
     try:    
@@ -72,7 +68,6 @@ def fit_profile(profile, initial_parameters):
         r_squared = 1 - (ss_res / ss_tot)        
     except Exception as e:
         print(e)
-        
        
     # Plot results to check that fitting is adequate   
     viz.plot_fit(profile, gauss, fit_parameters, 1)
@@ -84,6 +79,7 @@ def get_peak_intensity(peaks, total_images, incr_x, incr_y):
     Get series of average peak intensity for the family of equivalent peaks.
     peaks -- string, name of the peak family
     total_images -- dictionary of images
+    incr_x, incr_y -- size of integration window
     """
     
     intensities = defaultdict(float)
@@ -110,6 +106,9 @@ def sort_normalize(intensities, total_electrons, delays, n_unpumped, peaks):
     1. Normalize intensities by total electron counts at each time point
     2. Sort intensities according to the time delay
     3. Normalize the series by the average value before laser arrival
+    
+    peaks -- name of Bragg peaks family
+    n_unpumped -- number of time points before laser arrival
     """
    
     assert all([x>0 for x in total_electrons.values()])
@@ -129,6 +128,7 @@ def sort_normalize(intensities, total_electrons, delays, n_unpumped, peaks):
 def remove_outliers(series, delays):
     """
     Removes outliers in the series that commonly appear due to cosmic rays.
+    Series must be sorted to avoid deleting legitimate points.
     """   
     
     alpha = 2*np.std(series)/np.mean(series)
