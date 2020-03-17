@@ -1,16 +1,17 @@
 # diffraction_analysis
- A demo of code for diffraction file analysis.
- The demo is only limited to fitting peaks' profiles to Gaussian forms for extracting peaks' intensity.
+A demo of code for analysis of time series of diffraction patterns (DP).
+The demo is only limited to fitting peaks' profiles to Gaussian forms for extracting peaks' intensity, sorting according to the position of the delay stage, normalizing and removing outliers (due to cosmic rays).
 
-Files description:
+ ## Files Scheme
+![File Scheme](https://github.com/tankonst/diffraction_analysis/blob/master/scheme.JPG?raw=true)
 
-read_coordinates.py -- reads coordinates of peaks from a mouse click. Need to be done for each peak before running the analysis (only once per experiment unless sample change/beam shift)
+## Files Descriptions
+* **read_coordinates.py** – reads coordinates of peaks from a mouse click. Need to be done for each group of peaks before running the analysis (only once per experiment unless sample change/beam shift). The script generates files **coordinate*.txt** 
+* **experiment_info.txt** – files with parameters of the analysis (numper of time points before excitation with the laser, rotation angle, sizes of integration windows, etc.)
+* **vizualize.py** – vizualization methonds
+* **files_kit.py** – methods for extracting data from external .txt files
+* **IntensityWindow.py** – class for integrating intensity within a window
+* **scan_info.py** – methods to operate with image series and to extract global (not peak-specific) information for each scan: time delay values, total intensity, camera background, etc
+* **peak_info.py** – methods to extract intensities of individual peaks, as well as sort and normalize them and remove outliers
+* **analyze_script.py** (MAIN SCRIPT) – extract intensities for each peak groups and record them into .csv file. Requires the files path, experiment_info.txt, coordinate*.txt for at least one peak.
 
-analyze_script.py -- extract intensities for each families of peaks (average among equivalent peaks)
-
-ScanInfo.py -- library to operate with image series and to extract global (not peak-specific) information for each scan: time delay values, total intensity, camera background, etc.
-
-PeakInfo.py -- library to operate with individual peaks
-
-IntensityWindow -- class for integrating intensity 
-![Image description](link-to-image)
