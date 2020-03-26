@@ -37,8 +37,9 @@ def initiate_parameters(profile):
     """
     
     background = profile[0]
-    amplitude = sorted(profile)[-3]
-    center =  np.where(profile == amplitude)[0][0] 
+    amplitude = sorted(profile)[-1]
+    center =  np.where(profile == amplitude)[0][0]
+    amplitude *= 10
     width = 10
     background_slope = 0
     
@@ -49,7 +50,7 @@ def gauss(x, amplitude, center, width, background, background_slope):
     return (amplitude/width * np.exp(-0.5*((x-center)**2)/(width**2))
             + background + background_slope*x)
 
-def fit_profile(profile, initial_parameters):
+def fit_profile(profile, initial_parameters, visualize = True):
     """ 
     Fits profile with Gaussian function,
     returns:
@@ -70,7 +71,8 @@ def fit_profile(profile, initial_parameters):
         print(e)
        
     # Plot results to check that fitting is adequate   
-    viz.plot_fit(profile, gauss, fit_parameters, 1)
+    if visualize:
+        viz.plot_fit(profile, gauss, fit_parameters, 1)
 
     return fit_parameters, r_squared
     
@@ -101,13 +103,12 @@ def get_peak_intensity(peaks, total_images, incr_x, incr_y):
             
     return intensities
             
-def sort_normalize(intensities, total_electrons, delays, n_unpumped, peaks):
+def sort_normalize(intensities, total_electrons, delays, n_unpumped):
     """
     1. Normalize intensities by total electron counts at each time point
     2. Sort intensities according to the time delay
     3. Normalize the series by the average value before laser arrival
     
-    peaks -- name of Bragg peaks family
     n_unpumped -- number of time points before laser arrival
     """
    

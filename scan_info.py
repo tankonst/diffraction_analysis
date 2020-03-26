@@ -51,7 +51,7 @@ def center(image, x_center, y_center, dx_center, dy_center):
 
 def get_electrons_counts(image_files_names,
                          x_center, y_center, dx_center, dy_center,
-                         camera_v, camera_h):
+                         camera_v, camera_h, shuffled = False, save_text = True):
     """
     Calculates total intensity due to incoming electrons to use for
     normalization of other intensities (adjust for the long-term drift).
@@ -95,16 +95,23 @@ def get_electrons_counts(image_files_names,
         #total intensity
         total_int_d[image_delay] += sum(sum(image - cam_b)) - center_i
         
-    for delay in sorted(total_int_d):
-        total_int.append(total_int_d[delay])
-        camera_b.append(camera_b_d[delay])
-        center_int.append(center_int_d[delay])
+    if not shuffled:    
+        for delay in sorted(total_int_d):
+            total_int.append(total_int_d[delay])
+            camera_b.append(camera_b_d[delay])
+            center_int.append(center_int_d[delay])
+    else:
+        for delay in total_int_d:
+            total_int.append(total_int_d[delay])
+            camera_b.append(camera_b_d[delay])
+            center_int.append(center_int_d[delay])
      
     # records intensity series in the files (ordered by time of recording,
     # which may not match the order of actual delay values) 
-    np.savetxt('intensity_total.txt', total_int)
-    np.savetxt('camera.txt', camera_b)
-    np.savetxt('central_intensity.txt', center_int)
+    if save_text:
+        np.savetxt('intensity_total.txt', total_int)
+        np.savetxt('camera.txt', camera_b)
+        np.savetxt('central_intensity.txt', center_int)
     
     return total_int_d, center_int_d, camera_b_d
 

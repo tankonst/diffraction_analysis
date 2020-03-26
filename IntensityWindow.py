@@ -10,7 +10,7 @@ class IntensityWindow():
         self.y = y
         self.width = width
         self.hight = height
-        self.intensity = matrix[y:y+height+1, x:x+width+1]
+        self.intensity = matrix[y:y+height, x:x+width]
     
     def integrate2D(self):
         return sum(sum(self.intensity))

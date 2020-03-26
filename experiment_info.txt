@@ -8,3 +8,4 @@ dx_center = 97
 dy_center = 97
 camera_v = 100
 camera_h = 100
+shuffled = 0

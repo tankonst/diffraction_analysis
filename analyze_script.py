@@ -26,7 +26,8 @@ try:
     dx_center,
     dy_center,
     camera_v,
-    camera_h] = fk.read_scan_parameters('experiment_info.txt')
+    camera_h,
+    shuffled] = fk.read_scan_parameters('experiment_info.txt')
 
 
     peaks_to_analyze = fk.get_list_of_peaks()
@@ -38,7 +39,8 @@ try:
     # get general information about the scan
     total_electron_count, center_int_d, camera_b_d = scinf.get_electrons_counts(image_files_names,
                                                                                 x_center, y_center, dx_center, dy_center,
-                                                                                camera_v, camera_h) 
+                                                                                camera_v, camera_h,
+                                                                                shuffled = shuffled, save_text = True) 
     delays = scinf.get_delays(image_files_names)
     delays_sorted = scinf.delays_to_ps(sorted(delays.values()), n_unpumped)
     
@@ -53,7 +55,7 @@ try:
         row_intensities = pinf.get_peak_intensity(peaks, total_images, incr_x,incr_y)
         normalized_intensities = pinf.sort_normalize(row_intensities,
                                                      total_electron_count,
-                                                     delays, n_unpumped, peaks)
+                                                     delays, n_unpumped)
         normalized_intensities = pinf.remove_outliers(normalized_intensities, delays_sorted)
         
         # record into resulting table
