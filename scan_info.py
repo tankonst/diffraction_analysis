@@ -49,6 +49,12 @@ def center(image, x_center, y_center, dx_center, dy_center):
 
     return center_window.integrate2D()
 
+def read_image_delay(file_name):
+    """
+    Returns delay of the single image
+    """
+    return int(file_name.split('ANDOR1')[2].split('-')[1])
+
 def get_electrons_counts(image_files_names,
                          x_center, y_center, dx_center, dy_center,
                          camera_v, camera_h, shuffled = False, save_text = True):
@@ -79,7 +85,7 @@ def get_electrons_counts(image_files_names,
     
     for i in range(len(image_files_names)):
         file_name = image_files_names[i]
-        image_delay = int(file_name.split('-')[4].split('_')[0])
+        image_delay = read_image_delay(file_name)
                 
         # calculate all important intensities
         image = plt.imread(file_name).astype(float)
@@ -122,18 +128,20 @@ def get_images(image_files_names, angle):
     
     total_images = {}   
     for file_name in image_files_names:
-        image_delay = int(file_name.split('-')[4].split('_')[0])
+        image_delay = read_image_delay(file_name)
         image = rotate(plt.imread(file_name), angle)
         if image_delay in total_images:
             total_images[image_delay] += image
         else:
             total_images[image_delay] = image
     
-    # record a rotated image for reference
-    np.savetxt("image.txt", total_images[1], delimiter=" ")
+#    # record a rotated image for reference
+#    np.savetxt("image.txt", total_images[1], delimiter=" ")
     
     return total_images
 
+
+    
 def get_delays(image_files_names):
     """
     Reads time delays from the file names.
@@ -141,9 +149,9 @@ def get_delays(image_files_names):
     
     delays= {}    
     for file_name in image_files_names:
-        image_delay = int(file_name.split('-')[4].split('_')[0])
-        delays[image_delay] = float(file_name.split('-')[5].split('_')[0])
-        
+        image_delay = read_image_delay(file_name)
+        delays[image_delay] = float(file_name.split('ANDOR1')[2].split('-')[2].split('_')[0])
+      
     return delays
 
 def delays_to_ps(delays, n_unpumped):

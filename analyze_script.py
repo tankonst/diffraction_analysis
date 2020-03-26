@@ -31,6 +31,7 @@ try:
 
 
     peaks_to_analyze = fk.get_list_of_peaks()
+
     
     # get a list of DF files
     path = input('Enter the file location: ')

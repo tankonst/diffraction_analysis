@@ -27,6 +27,10 @@ def plot_series(delays, values, label, feature, n=1):
     """
     Plots a time series of feature.
     """
+    data =  [[d, v] for d,v in zip(delays,values)]
+    data.sort(key = lambda x: x[0])
+    delays = [x[0] for x in data]
+    values = [x[1] for x in data]
     
     plt.figure(num = n)
     plt.plot(delays, values, label = label)
