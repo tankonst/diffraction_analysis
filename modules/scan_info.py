@@ -4,7 +4,7 @@ Methods for obtaining general characteristic of the scan (not related to a certa
 """   
 from collections import defaultdict
 import matplotlib.pyplot as plt
-import IntensityWindow as iw
+import modules.IntensityWindow as iw
 from skimage.transform import rotate
 import numpy as np
 

@@ -5,12 +5,12 @@ Methods for measuring intensities of individual Bragg peaks:
     * sorting and normalizing the values
     * romoving obvious outliers in time series
 """
-import IntensityWindow as iw
+import modules.IntensityWindow as iw
 from scipy.optimize import curve_fit
 import numpy as np
 from collections import defaultdict
-import visualize as viz
-import files_kit as fk
+import modules.visualize as viz
+import modules.files_kit as fk
 
 def get_profile(image, x, y, incr_x, incr_y, direction = 'Y'):
     """

@@ -7,10 +7,10 @@ and the correct scan parameters are listed in the file 'scan_info.txt'
 To run the script, the address of the folder with DF is needed.
 The script returns the table with normalized intensity time series.
 """
-import scan_info as scinf
-import peak_info as pinf
-import visualize as viz
-import files_kit as fk
+import modules.scan_info as scinf
+import modules.peak_info as pinf
+import modules.visualize as viz
+import modules.files_kit as fk
 import glob
 import pandas as pd
 
