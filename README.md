@@ -15,5 +15,5 @@ The demo is only limited to fitting peaks' profiles to Gaussian forms for extrac
 * **peak_info.py** – methods to extract intensities of individual peaks, as well as sort and normalize them and remove outliers
 * **analyze_script.py** (MAIN SCRIPT) – extract intensities for each peak groups and record them into .csv file. Requires the files path, experiment_info.txt, coordinate*.txt for at least one peak.
 * **test_scan_info.py** and **test_peak_info.py** – tests for the corresponding libraries
-* **test** folder contains simulated series of images (intensity drop ~ exp(-0.5))
+* **test** folder contains simulated series of images (intensity drop ~ exp(-0.5)) and tests for scan_info.py and peak_info.py libraries (to be used with PyTest)
 
